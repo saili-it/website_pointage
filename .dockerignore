@@ -1,0 +1,14 @@
+# Le contexte de build ne doit pas embarquer les fichiers sources :
+# sans ça, 92 Mo partent vers le démon Docker à chaque `docker build`.
+demo vd.mp4
+ChatGPT Image*.png
+*.psd
+*.ai
+
+# Fichiers de projet, inutiles dans l'image
+README.md
+Dockerfile
+.dockerignore
+docker-compose.yml
+.git
+.gitignore

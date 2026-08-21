@@ -1,0 +1,14 @@
+services:
+  site:
+    build: .
+    image: pointage-site:latest
+    container_name: pointage-site
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
