@@ -157,24 +157,39 @@ l'image. Les fichiers sources restés à la racine (`demo vd.mp4`, le PNG
 d'origine) sont exclus par [.dockerignore](.dockerignore) — sans quoi 92 Mo
 partiraient inutilement vers le démon à chaque build.
 
-### Derrière un reverse proxy
+### Derrière un reverse proxy → https://pointage.marchepro.ma
 
-Pour servir `https://pointage.marchepro.ma` avec nginx sur l'hôte :
+Le vhost hôte est prêt dans
+[deploy/pointage.marchepro.ma.conf](deploy/pointage.marchepro.ma.conf) :
 
-```nginx
-server {
-    server_name pointage.marchepro.ma;
-    location / {
-        proxy_pass http://127.0.0.1:9090;
-        proxy_set_header Host              $host;
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
+```bash
+sudo cp deploy/pointage.marchepro.ma.conf /etc/nginx/sites-available/pointage
+sudo ln -s /etc/nginx/sites-available/pointage /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+sudo certbot --nginx -d pointage.marchepro.ma
 ```
 
-Puis `certbot --nginx -d pointage.marchepro.ma` pour le HTTPS.
+Certbot ajoute lui-même le bloc `443`, les certificats et la redirection
+HTTP → HTTPS. Le DNS doit déjà pointer sur le serveur avant de le lancer :
+`dig +short pointage.marchepro.ma` doit renvoyer l'IP de la machine.
+
+`nginx.conf` (celui du conteneur) n'a **rien à changer** pour le domaine : son
+`server_name` contient déjà `pointage.marchepro.ma` et un `_` attrape-tout, donc
+il répond quel que soit le `Host` transmis par le proxy.
+
+### Une fois le HTTPS en place : refermer le 9090
+
+Tant que le compose publie `9090:9090`, le site reste joignable en clair sur
+`http://IP:9090`, ce qui contourne le HTTPS et crée un doublon pour Google.
+Dans `docker-compose.yml` :
+
+```yaml
+    ports:
+      - "127.0.0.1:9090:9090"
+```
+
+puis `docker compose up -d`. Le proxy y accède toujours, Internet non.
+Côté pare-feu, seuls 80 et 443 ont besoin d'être ouverts.
 
 ### Mise à jour du site
 
