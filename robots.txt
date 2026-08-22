@@ -1,3 +1,6 @@
+# Tout est explorable. La racine et les adresses en .html sont des
+# redirections 301 vers /mobile et /pointeuse : elles ne sont volontairement
+# pas bloquées ici, sinon les moteurs ne pourraient pas voir la redirection.
 User-agent: *
 Allow: /
 

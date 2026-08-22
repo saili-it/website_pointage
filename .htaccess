@@ -1,0 +1,31 @@
+# URLs propres pour un hébergement Apache / cPanel.
+# Le déploiement Docker n'utilise pas ce fichier : nginx fait la même chose
+# dans nginx.conf. Les deux doivent rester cohérents.
+#
+# Le site tient en deux pages, servies sans extension :
+#   /mobile     pointage depuis le téléphone
+#   /pointeuse  pointeuse installée sur site + système
+# La racine n'est pas une page : elle renvoie sur /mobile.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # / et /index.html -> /mobile
+    RewriteRule ^$ /mobile [R=301,L]
+    RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+    RewriteRule ^ /mobile [R=301,L]
+
+    # Le site a un temps servi la page pointeuses sous ce nom : les liens
+    # déjà partagés doivent continuer à tomber sur la bonne page.
+    RewriteRule ^pointeuses(\.html)?/?$ /pointeuse [R=301,L]
+
+    # Toute autre adresse en .html -> sans extension
+    RewriteCond %{THE_REQUEST} \s/(.+)\.html[\s?] [NC]
+    RewriteRule ^ /%1 [R=301,L,NE]
+
+    # Extension implicite, sans changer l'URL affichée : /mobile -> mobile.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>

@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Deux pages, deux langues. L'arabe n'a pas d'adresse propre : il est rendu
+     côté client et se force par ?lang=ar. Les balises hreflang le déclarent
+     quand même, comme le font les <link rel="alternate"> de chaque page. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://pointage.marchepro.ma/</loc>
+    <loc>https://pointage.marchepro.ma/mobile</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pointage.marchepro.ma/mobile"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://pointage.marchepro.ma/mobile?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pointage.marchepro.ma/mobile"/>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://pointage.marchepro.ma/pointeuses.html</loc>
+    <loc>https://pointage.marchepro.ma/pointeuse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pointage.marchepro.ma/pointeuse"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://pointage.marchepro.ma/pointeuse?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pointage.marchepro.ma/pointeuse"/>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

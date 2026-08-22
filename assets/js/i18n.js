@@ -10,24 +10,24 @@ window.POINTAGE_I18N = {
   /* Titre et description par page : la clé correspond à l'attribut
      `data-page` porté par la balise <html>. */
   meta: {
-    home: {
+    mobile: {
       fr: {
-        title: "Pointage — Le pointage de vos équipes, sans pointeuse",
-        description: "Pointage à distance géolocalisé : vos employés pointent depuis leur téléphone, à l'intérieur des zones que vous autorisez. Heures, retards et présence en temps réel."
+        title: "Pointage — Logiciel de pointage des employés par GPS au Maroc",
+        description: "Logiciel de pointage des employés au Maroc : pointage mobile par GPS dans les zones autorisées. Heures, retards, absences et export paie en temps réel."
       },
       ar: {
-        title: "Pointage — تسجيل حضور فريقك بدون آلة بصمة",
-        description: "تسجيل الحضور عن بُعد بتحديد الموقع: يسجّل موظفوك حضورهم من هواتفهم داخل المناطق التي تسمح بها فقط. ساعات العمل والتأخيرات والحضور في الوقت الفعلي."
+        title: "Pointage — برنامج تسجيل حضور الموظفين بالهاتف في المغرب",
+        description: "برنامج تسجيل حضور الموظفين بالمغرب: يسجّل موظفوك حضورهم من هواتفهم داخل المناطق المحددة بنظام GPS. ساعات العمل والتأخيرات والغيابات وتصدير كشف الأجور في الوقت الفعلي."
       }
     },
-    devices: {
+    pointeuse: {
       fr: {
-        title: "Pointeuse + système — Pointage",
-        description: "Pointeuses biométriques, badge RFID ou reconnaissance faciale, installées par nos techniciens et reliées au logiciel Pointage : présences, retards, absences et exports en temps réel."
+        title: "Pointeuse biométrique au Maroc — pose et logiciel | Pointage",
+        description: "Pointeuse biométrique au Maroc : empreinte, badge RFID ou reconnaissance faciale, posée par nos techniciens et reliée au logiciel de gestion des présences."
       },
       ar: {
-        title: "Pointage — آلة بصمة + نظام إدارة",
-        description: "آلات بصمة بيومترية، أو بطاقة RFID، أو تعرّف على الوجه، يركّبها تقنيونا وتُربط ببرنامج Pointage: الحضور والتأخيرات والغيابات والتصديرات في الوقت الفعلي."
+        title: "آلة بصمة بالمغرب — التركيب والبرنامج | Pointage",
+        description: "آلة بصمة بالمغرب: بصمة الإصبع أو بطاقة RFID أو التعرّف على الوجه، يركّبها تقنيونا وتُربط ببرنامج إدارة الحضور والانصراف: الحضور والتأخيرات والتصديرات."
       }
     }
   },
@@ -37,6 +37,7 @@ window.POINTAGE_I18N = {
 
     "nav.solMobile": "التسجيل بالهاتف",
     "nav.solDevice": "آلة بصمة + نظام",
+    "nav.other": "حلول أخرى",
     "nav.features": "المزايا",
     "nav.how": "طريقة العمل",
     "nav.demo": "عرض توضيحي",
@@ -50,10 +51,10 @@ window.POINTAGE_I18N = {
     "cta.watch": "شاهد العرض",
     "cta.quote": "اطلب عرض سعر",
 
-    "hero.eyebrow": "تسجيل حضور عن بُعد بتحديد الموقع",
-    "hero.title1": "تسجيل الحضور ببساطة،",
+    "hero.eyebrow": "برنامج تسجيل الحضور بتحديد الموقع — المغرب",
+    "hero.title1": "تسجيل حضور موظفيك،",
     "hero.title2": "بدون آلة بصمة.",
-    "hero.sub": "يسجّل فريقك الحضور من هواتفهم، داخل المناطق التي تسمح بها فقط. وتتابع أنت ساعات العمل والتأخيرات والحضور في الوقت الفعلي — في الورش، في المتاجر، أو أثناء التنقل.",
+    "hero.sub": "يسجّل فريقك الحضور من هواتفهم، داخل المناطق التي تسمح بها فقط. وتتابع أنت ساعات العمل والتأخيرات والحضور في الوقت الفعلي — في الورش، في المتاجر، أو أثناء التنقل، في جميع أنحاء المغرب.",
     "hero.check1": "لا حاجة لشراء أي جهاز",
     "hero.check2": "التشغيل خلال 24 ساعة",
     "hero.check3": "تصدير CSV جاهز لكشف الأجور",
@@ -80,7 +81,7 @@ window.POINTAGE_I18N = {
     "why.good5": "لا شيء تصونه: تطبيق ولوحة تحكم فقط",
 
     "feat.kicker": "المزايا",
-    "feat.title": "كل ما تحتاجه لمتابعة فرقك",
+    "feat.title": "كل ما يلزم لإدارة حضور فرقك",
     "feat.sub": "تطبيق على الهاتف للموظف، ولوحة إدارة لك. لا شيء آخر يُثبَّت.",
     "feat.1.t": "تسجيل من الهاتف",
     "feat.1.d": "الدخول والخروج بضغطة واحدة من هاتف الموظف. ساعة مباشرة، وتذكير بآخر تسجيل، وتأكيد فوري.",
@@ -209,10 +210,10 @@ window.POINTAGE_I18N = {
     "cross.cta": "اكتشف آلات البصمة",
 
     /* ================= Page « Pointeuse + système » ================= */
-    "pt.hero.eyebrow": "آلة بصمة، تركيب، وبرنامج",
-    "pt.hero.title1": "الجهاز، التركيب",
+    "pt.hero.eyebrow": "آلة بصمة بيومترية، تركيب ونظام — المغرب",
+    "pt.hero.title1": "آلة البصمة البيومترية، التركيب",
     "pt.hero.title2": "والبرنامج.",
-    "pt.hero.sub": "نوفّر لك آلة البصمة، ويركّبها تقنيونا في مقرّك، وهي تغذّي مباشرة برنامج Pointage. الحضور والتأخيرات وساعات العمل تُحتسب وحدها.",
+    "pt.hero.sub": "نوفّر لك آلة البصمة — ببصمة الإصبع أو بطاقة RFID أو التعرّف على الوجه — ويركّبها تقنيونا في مقرّك، وهي تغذّي مباشرة برنامج Pointage. الحضور والتأخيرات وساعات العمل تُحتسب وحدها.",
     "pt.cta.models": "شاهد الموديلات",
     "pt.hero.check1": "بصمة، بطاقة، رمز سري أو وجه",
     "pt.hero.check2": "التركيب والإعداد مشمولان",
