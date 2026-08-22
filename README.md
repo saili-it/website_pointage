@@ -17,7 +17,8 @@ website/
   .dockerignore         exclut les fichiers sources du contexte de build
   assets/
     css/styles.css
-    js/config.js        coordonnées de contact et endpoint du formulaire
+    js/config.js        coordonnées de contact, formulaire, Meta Pixel
+    js/pixel.js         Meta Pixel — chargé seulement si l'ID est renseigné
     js/i18n.js          traductions arabes + titres de page
     js/main.js          langue, menu, vidéo, formulaire
     img/                logo, favicon, visuels app et pointeuses
@@ -59,7 +60,8 @@ Tout est regroupé dans **`assets/js/config.js`**.
 | --- | --- |
 | `whatsapp` | `212634593328` — format international **sans `+` ni espaces** |
 | `phoneDisplay` / `phoneDial` | `+212 6 34 59 33 28` |
-| `contactEmail` | `contact@marchepro.ma` |
+| `contactEmail` | `contact@marchepro.ma` |
+| `metaPixelId` | `38285850644339186` — laisser `""` pour couper le suivi |
 | `formEndpoint` | `https://formsubmit.co/ajax/contact@marchepro.ma` — **reste à activer**, voir ci-dessous |
 
 ### Réception du formulaire
@@ -349,6 +351,35 @@ ajouter dans `offers` rendra la fiche éligible aux résultats enrichis.
   remettre à jour quand le contenu change vraiment.
 - [robots.txt](robots.txt) n'interdit rien : bloquer les redirections
   empêcherait les moteurs de les suivre.
+
+### Meta Pixel (Facebook)
+
+Le suivi Meta est actif sur les deux pages. Il envoie un événement
+`PageView` à chaque visite, ce qui permet de mesurer les campagnes Facebook
+et Instagram et de constituer des audiences de reciblage.
+
+- L'identifiant est dans [config.js](assets/js/config.js), clé `metaPixelId`.
+  Le vider suffit à tout couper : [pixel.js](assets/js/pixel.js) s'arrête
+  alors avant la moindre requête. Pensez à retirer aussi la balise
+  `<noscript>` en bas des deux pages, qui porte l'identifiant en dur.
+- L'extrait de Meta est dans un fichier, pas en ligne dans la page : la CSP
+  interdit les scripts en ligne, et c'est une protection qu'il vaut mieux
+  garder. Ne recollez pas le `<script>` de Meta directement dans le HTML,
+  il serait bloqué par le navigateur.
+- La CSP de [nginx.conf](nginx.conf) a été ouverte pour Meta, et pour Meta
+  seulement : `connect.facebook.net` en `script-src`, `www.facebook.com`
+  en `img-src`, `connect-src` et `frame-src`.
+
+**Vérification** : installez l'extension *Meta Pixel Helper* (Chrome), ouvrez
+`/mobile` en ligne, elle doit afficher l'ID et un `PageView`. La console du
+navigateur ne doit signaler aucune erreur *Content Security Policy*.
+
+> **Consentement.** Le Pixel dépose des cookies et transmet l'adresse IP et la
+> page visitée à Meta. Au Maroc, la loi 09-08 impose d'informer les visiteurs
+> et de déclarer le traitement à la CNDP ; pour des visiteurs européens, le
+> RGPD impose en plus de recueillir leur consentement **avant** le dépôt. Le
+> site n'a aujourd'hui ni bandeau de consentement ni politique de
+> confidentialité — à prévoir.
 
 ### À faire une fois en ligne
 
