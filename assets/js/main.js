@@ -37,7 +37,11 @@
       if (value) el.textContent = value;
     });
 
-    var meta = (DICT.meta && DICT.meta[lang]) || null;
+    /* Chaque page a son propre titre et sa propre description : la clé est
+       portée par <html data-page="…">. */
+    var page = html.getAttribute("data-page") || "home";
+    var pageMeta = (DICT.meta && DICT.meta[page]) || null;
+    var meta = (pageMeta && pageMeta[lang]) || null;
     if (meta) {
       document.title = meta.title;
       var d = document.querySelector('meta[name="description"]');

@@ -12,7 +12,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # On copie explicitement ce qui doit être servi, et rien d'autre : les
 # fichiers sources restés à la racine du dépôt (l'enregistrement d'écran
 # original de 92 Mo, le PNG de la maquette) n'ont rien à faire dans l'image.
-COPY index.html robots.txt sitemap.xml /usr/share/nginx/html/
+COPY index.html pointeuses.html robots.txt sitemap.xml /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
 
 EXPOSE 9090

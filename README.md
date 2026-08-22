@@ -5,7 +5,8 @@ Pas de build, pas de dépendances : ce sont des fichiers servis tels quels.
 
 ```
 website/
-  index.html
+  index.html            solution 1 — pointage mobile géolocalisé
+  pointeuses.html       solution 2 — pointeuse + installation + système
   robots.txt
   sitemap.xml
   Dockerfile            image nginx, écoute sur 9090
@@ -15,11 +16,31 @@ website/
   assets/
     css/styles.css
     js/config.js        coordonnées de contact et endpoint du formulaire
-    js/i18n.js          traductions arabes
+    js/i18n.js          traductions arabes + titres de page
     js/main.js          langue, menu, vidéo, formulaire
-    img/                logo, favicon, visuel de l'application
+    img/                logo, favicon, visuels app et pointeuses
     video/demo.mp4      vidéo de démonstration
 ```
+
+## 0. Les deux offres
+
+Le site présente deux solutions, chacune sur sa propre page. La bascule est
+dans l'en-tête, avant les ancres de section, et elle est reprise en pied de
+page ainsi que dans une bande de renvoi au milieu de chaque page.
+
+| Page | Offre | Promesse |
+| --- | --- | --- |
+| `index.html` | **Pointage mobile** | Les employés pointent depuis leur téléphone, dans les zones autorisées. Aucun matériel. |
+| `pointeuses.html` | **Pointeuse + système** | Nous fournissons la borne, nos techniciens l'installent, et elle alimente le même logiciel. |
+
+Les deux formulaires sont identiques, à un champ caché près : `solution` vaut
+`Pointage mobile` ou `Pointeuse + système`, ce qui permet de savoir depuis
+quelle page la demande a été envoyée.
+
+Les visuels des pointeuses (`assets/img/pointeuse-*.jpg`) ont été découpés dans
+les planches produit fournies, puis éclaircis pour que tous les appareils
+apparaissent sur le même fond blanc. Pour remplacer un modèle, il suffit de
+déposer une photo détourée sur fond blanc au même nom.
 
 ## 1. Coordonnées et formulaire
 
@@ -114,13 +135,24 @@ tout le fichier téléchargé.
 
 Le site est bilingue **français / arabe**, avec passage automatique en RTL.
 
-- Le français est écrit directement dans `index.html` : le site reste lisible
+- Le français est écrit directement dans les pages HTML : le site reste lisible
   même si le JavaScript ne se charge pas.
 - L'arabe vit dans `assets/js/i18n.js`.
 - La langue choisie est mémorisée dans le navigateur. `?lang=ar` force l'arabe.
 
-Pour modifier un texte français, éditer `index.html` ; pour l'arabe,
+Pour modifier un texte français, éditer la page concernée ; pour l'arabe,
 `i18n.js`, en gardant la même clé `data-i18n`.
+
+Le titre et la description de chaque page sont traduits eux aussi. Ils sont
+regroupés dans `i18n.js` sous `meta`, indexés par la valeur de l'attribut
+`data-page` porté par la balise `<html>` (`home` pour `index.html`, `devices`
+pour `pointeuses.html`). Une nouvelle page a donc besoin de son propre
+`data-page` et de l'entrée `meta` correspondante.
+
+> Une même clé `data-i18n` doit porter **le même texte français** partout où
+> elle apparaît : le repli français est mémorisé une seule fois par clé, la
+> dernière occurrence de la page gagnant. C'est pour ça que le lien « Nos
+> modèles » du pied de page utilise `footer.models` et non `nav.models`.
 
 ## 4. Déploiement avec Docker (port 9090)
 
@@ -152,10 +184,13 @@ Ce que la configuration fait pour vous ([nginx.conf](nginx.conf)) :
 Le conteneur tourne en **lecture seule** (`read_only: true`), avec les seuls
 répertoires temporaires de nginx montés en tmpfs, et `no-new-privileges`.
 
-Seuls `index.html`, `assets/`, `robots.txt` et `sitemap.xml` entrent dans
-l'image. Les fichiers sources restés à la racine (`demo vd.mp4`, le PNG
-d'origine) sont exclus par [.dockerignore](.dockerignore) — sans quoi 92 Mo
-partiraient inutilement vers le démon à chaque build.
+Seuls `index.html`, `pointeuses.html`, `assets/`, `robots.txt` et `sitemap.xml`
+entrent dans l'image. Les fichiers sources restés à la racine (`demo vd.mp4`,
+les PNG d'origine) sont exclus par [.dockerignore](.dockerignore) — sans quoi
+92 Mo partiraient inutilement vers le démon à chaque build.
+
+> Si vous ajoutez une page, pensez à l'ajouter aussi à la ligne `COPY` du
+> [Dockerfile](Dockerfile) : la copie est explicite, page par page.
 
 ### Derrière un reverse proxy → https://pointage.marchepro.ma
 
@@ -238,7 +273,11 @@ que la vidéo et les polices distantes peuvent être bloquées par le navigateur
 - [x] Formulaire branché sur FormSubmit
 - [ ] **Activer FormSubmit** : envoyer une demande de test puis cliquer le lien
       de confirmation reçu sur contact@marchepro.ma (voir §1)
-- [ ] **Ne pas téléverser** `demo vd.mp4` ni le PNG à la racine : ce sont les
+- [x] Page « Pointeuse + système » en ligne, avec la gamme, l'installation et
+      les tarifs sur devis
+- [ ] **Ne pas téléverser** `demo vd.mp4` ni les PNG à la racine : ce sont les
       fichiers sources, ils feraient 93 Mo de doublons en ligne
+- [ ] Confirmer la gamme réellement proposée : les six modèles affichés
+      viennent des planches produit, à ajuster si le catalogue diffère
 - [ ] Ajouter des références clients / logos si vous en avez (rubrique à créer)
 - [ ] Vérifier les tarifs annoncés « sur devis » si vous décidez d'afficher des prix
