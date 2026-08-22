@@ -41,6 +41,12 @@ window.POINTAGE_CONFIG = {
   formEndpoint: "https://formsubmit.co/ajax/contact@marchepro.ma",
   formAccessKey: "",
 
+  /* Meta Pixel (Facebook) — identifiant de la source de données.
+     Il se trouve dans le Gestionnaire d'événements Meta, colonne « ID ».
+     Laissez "" pour désactiver complètement le suivi : aucune requête ne
+     partira alors chez Meta. Voir assets/js/pixel.js. */
+  metaPixelId: "38285850644339186",
+
   /* Adresse de repli si formEndpoint est vide. */
   contactEmail: "contact@marchepro.ma"
 };
