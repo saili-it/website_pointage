@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-page="mobile">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pointage — Logiciel de pointage des employés par GPS au Maroc</title>
+<meta name="description" content="Logiciel de pointage des employés au Maroc : pointage mobile par GPS dans les zones autorisées. Heures, retards, absences et export paie en temps réel.">
+<meta name="theme-color" content="#121358">
+<link rel="canonical" href="https://pointage.marchepro.ma/mobile">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+<!-- Les deux langues vivent à la même adresse : l'arabe est rendu côté client
+     et se force par ?lang=ar. x-default pointe sur le français, langue par
+     défaut du site. -->
+<link rel="alternate" hreflang="fr" href="https://pointage.marchepro.ma/mobile">
+<link rel="alternate" hreflang="ar" href="https://pointage.marchepro.ma/mobile?lang=ar">
+<link rel="alternate" hreflang="x-default" href="https://pointage.marchepro.ma/mobile">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pointage.marchepro.ma/mobile">
+<meta property="og:site_name" content="Pointage">
+<meta property="og:title" content="Pointage — Logiciel de pointage des employés par GPS au Maroc">
+<meta property="og:description" content="Logiciel de pointage des employés au Maroc : pointage mobile par GPS dans les zones autorisées. Heures, retards, absences et export paie en temps réel.">
+<meta property="og:image" content="https://pointage.marchepro.ma/assets/img/pointage-app-hero.png">
+<meta property="og:image:width" content="1536">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Application de pointage mobile et tableau de bord Pointage">
+<meta property="og:locale" content="fr_MA">
+<meta property="og:locale:alternate" content="ar_MA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pointage — Logiciel de pointage des employés par GPS au Maroc">
+<meta name="twitter:description" content="Logiciel de pointage des employés au Maroc : pointage mobile par GPS dans les zones autorisées. Heures, retards, absences et export paie en temps réel.">
+<meta name="twitter:image" content="https://pointage.marchepro.ma/assets/img/pointage-app-hero.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Cairo:wght@400;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<!-- Balisage structuré. Un seul @graph par page : l'entreprise et le site sont
+     décrits une fois, avec un @id stable que les deux pages réutilisent. Les
+     questions sont recopiées à l'identique de la section #faq — si le texte de
+     la page change, celui-ci doit changer aussi. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://pointage.marchepro.ma/#organization",
+      "name": "Pointage",
+      "url": "https://pointage.marchepro.ma/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pointage.marchepro.ma/assets/img/logo-mark.svg"
+      },
+      "email": "contact@marchepro.ma",
+      "telephone": "+212634593328",
+      "areaServed": { "@type": "Country", "name": "Maroc" },
+      "knowsLanguage": ["fr", "ar"],
+      "sameAs": ["https://www.facebook.com/profile.php?id=61593704427657"],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "telephone": "+212634593328",
+        "email": "contact@marchepro.ma",
+        "areaServed": "MA",
+        "availableLanguage": ["fr", "ar"]
+      }]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pointage.marchepro.ma/#website",
+      "url": "https://pointage.marchepro.ma/",
+      "name": "Pointage",
+      "publisher": { "@id": "https://pointage.marchepro.ma/#organization" },
+      "inLanguage": "fr-MA"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://pointage.marchepro.ma/mobile#webpage",
+      "url": "https://pointage.marchepro.ma/mobile",
+      "name": "Pointage — Logiciel de pointage des employés par GPS au Maroc",
+      "description": "Logiciel de pointage des employés au Maroc : pointage mobile par GPS dans les zones autorisées. Heures, retards, absences et export paie en temps réel.",
+      "isPartOf": { "@id": "https://pointage.marchepro.ma/#website" },
+      "about": { "@id": "https://pointage.marchepro.ma/mobile#software" },
+      "primaryImageOfPage": { "@type": "ImageObject", "url": "https://pointage.marchepro.ma/assets/img/pointage-app-hero.png" },
+      "inLanguage": "fr-MA"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://pointage.marchepro.ma/mobile#software",
+      "name": "Pointage",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Gestion des temps et des présences",
+      "operatingSystem": "Android, iOS, Web",
+      "url": "https://pointage.marchepro.ma/mobile",
+      "description": "Logiciel de pointage des employés par géolocalisation : pointage mobile dans les zones de travail autorisées, tableau de bord temps réel, feuille de temps et export CSV pour la paie.",
+      "inLanguage": ["fr", "ar"],
+      "provider": { "@id": "https://pointage.marchepro.ma/#organization" },
+      "featureList": [
+        "Pointage depuis le téléphone de l'employé",
+        "Zones de travail géolocalisées (GPS)",
+        "Détection des localisations simulées",
+        "Verrouillage du compte sur un seul appareil",
+        "Tableau de bord des présences en temps réel",
+        "Suivi des retards et des absences",
+        "Gestion multi-sites et multi-équipes",
+        "Feuille de temps et export CSV pour la paie"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "MAD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://pointage.marchepro.ma/mobile#pricing",
+        "description": "Sur devis, selon l'effectif",
+        "seller": { "@id": "https://pointage.marchepro.ma/#organization" }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pointage.marchepro.ma/mobile#faq",
+      "isPartOf": { "@id": "https://pointage.marchepro.ma/mobile#webpage" },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Faut-il acheter du matériel ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Pas pour cette solution : vos employés utilisent leur propre téléphone, et vous un navigateur. Si vous préférez une borne à l'entrée, nous fournissons et installons aussi des pointeuses." }
+        },
+        {
+          "@type": "Question",
+          "name": "Que se passe-t-il si un employé pointe en dehors du site ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Le pointage est refusé et l'employé voit immédiatement pourquoi. La tentative reste visible dans le journal, avec son motif : hors zone, localisation simulée, ou appareil non reconnu." }
+        },
+        {
+          "@type": "Question",
+          "name": "Un employé peut-il pointer depuis le téléphone d'un collègue ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Non. Chaque compte est lié à l'appareil sur lequel il a été enregistré. Un pointage venant d'un autre téléphone est rejeté, et changer d'appareil passe par l'administrateur." }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on gérer plusieurs sites et plusieurs équipes ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui. Vous créez autant de sites que nécessaire, chacun avec sa zone et ses horaires, et vous affectez chaque employé aux sites où il est autorisé à pointer." }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment récupérer les heures pour la paie ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "La feuille de temps se met à jour en continu et s'exporte en CSV sur la période de votre choix. Le fichier s'ouvre dans Excel et se transmet tel quel au comptable." }
+        },
+        {
+          "@type": "Question",
+          "name": "Où sont hébergées nos données ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Chaque entreprise dispose de son propre déploiement, avec sa propre base de données. L'hébergement est convenu avec vous lors de la mise en place." }
+        },
+        {
+          "@type": "Question",
+          "name": "Combien de temps pour démarrer ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Comptez une journée. Nous mettons en place votre espace, créons vos premiers sites avec vous, et vos équipes peuvent pointer dès le lendemain matin." }
+        },
+        {
+          "@type": "Question",
+          "name": "L'application fonctionne-t-elle sur iPhone et sur Android ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, l'application mobile est disponible pour les deux. La console d'administration s'utilise depuis n'importe quel navigateur, sur ordinateur comme sur tablette." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="a11y.skip">Aller au contenu</a>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Pointage">
+      <img src="assets/img/logo-mark.svg" alt="" width="34" height="34">
+      <span class="brand-word"><span class="brand-point">Point</span><span class="brand-age">age</span></span>
+    </a>
+
+    <nav class="nav" id="primaryNav" aria-label="Navigation principale">
+      <div class="nav-switch" role="group" aria-label="Nos solutions">
+        <a href="/mobile" class="is-current" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg>
+          <span data-i18n="nav.solMobile">Pointage mobile</span>
+        </a>
+        <a href="/pointeuse">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M6.5 8.5h5"/><path d="M6.5 12h5"/><path d="M6.5 15.5h3"/><circle cx="16.8" cy="12" r="2.6"/></svg>
+          <span data-i18n="nav.solDevice">Pointeuse + système</span>
+        </a>
+      </div>
+      <a class="nav-other" href="https://solutions.marchepro.ma/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14.5V19a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 19V8a1.5 1.5 0 0 1 1.5-1.5H10"/></svg>
+        <span data-i18n="nav.other">Autres solutions</span>
+      </a>
+      <a class="btn btn-primary nav-cta" href="#contact" data-i18n="cta.demo">Demander une démo</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switch" role="group" aria-label="Langue">
+        <button type="button" data-lang="fr" class="is-active">FR</button>
+        <button type="button" data-lang="ar">ع</button>
+      </div>
+      <a class="btn btn-primary btn-sm hide-sm" href="#contact" data-i18n="cta.demo">Demander une démo</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot"></span><span data-i18n="hero.eyebrow">Logiciel de pointage géolocalisé — Maroc</span></p>
+      <h1 class="hero-title">
+        <span data-i18n="hero.title1">Le pointage de vos employés,</span>
+        <span class="accent" data-i18n="hero.title2">sans pointeuse.</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">Vos équipes pointent depuis leur téléphone, uniquement à l'intérieur des zones que vous autorisez. Vous suivez les heures, les retards et la présence en temps réel — sur chantier, en boutique ou en déplacement, partout au Maroc.</p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#contact" data-i18n="cta.demo">Demander une démo</a>
+        <a class="btn btn-ghost btn-lg" href="#demo">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span data-i18n="cta.watch">Voir la démo</span>
+        </a>
+      </div>
+
+      <ul class="hero-checks">
+        <li data-i18n="hero.check1">Aucun matériel à acheter</li>
+        <li data-i18n="hero.check2">Mise en route en 24 h</li>
+        <li data-i18n="hero.check3">Export CSV prêt pour la paie</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-shot">
+        <img src="assets/img/pointage-app-mockup.png"
+             alt="Tableau de bord Pointage sur ordinateur portable et application mobile de pointage sur smartphone"
+             width="1345" height="761" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STAT BAR ============================ -->
+<section class="statbar">
+  <div class="container statbar-inner">
+    <div class="stat"><strong>0</strong><span data-i18n="stat.1">pointeuse à acheter</span></div>
+    <div class="stat"><strong>GPS</strong><span data-i18n="stat.2">zones de travail autorisées</span></div>
+    <div class="stat"><strong>24/7</strong><span data-i18n="stat.3">suivi en temps réel</span></div>
+    <div class="stat"><strong>CSV</strong><span data-i18n="stat.4">export pour la paie</span></div>
+  </div>
+</section>
+
+<!-- ============================ PROBLEM ============================ -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker" data-i18n="why.kicker">Le problème</p>
+      <h2 data-i18n="why.title">Hors du siège, les heures se perdent</h2>
+      <p class="section-sub" data-i18n="why.sub">Dès que vos équipes travaillent ailleurs qu'au bureau, le suivi redevient artisanal : feuilles de présence, appels de contrôle, et ressaisie en fin de mois. Une borne fixe, elle, ne suit personne sur un chantier ou en tournée.</p>
+    </div>
+
+    <div class="compare">
+      <div class="compare-col compare-bad">
+        <h3 data-i18n="why.badTitle">Aujourd'hui, sans Pointage</h3>
+        <ul>
+          <li data-i18n="why.bad1">Des feuilles de présence remplies à la main, parfois après coup</li>
+          <li data-i18n="why.bad2">Aucune preuve que la personne était bien sur le site</li>
+          <li data-i18n="why.bad3">Des pointages « rendus service » entre collègues</li>
+          <li data-i18n="why.bad4">Des heures ressaisies dans Excel chaque fin de mois</li>
+          <li data-i18n="why.bad5">Des retards repérés trop tard et des litiges difficiles à trancher</li>
+        </ul>
+      </div>
+      <div class="compare-col compare-good">
+        <h3 data-i18n="why.goodTitle">Avec Pointage</h3>
+        <ul>
+          <li data-i18n="why.good1">Le téléphone de l'employé devient la pointeuse</li>
+          <li data-i18n="why.good2">Autant de sites et de zones que vous voulez, créés en deux minutes</li>
+          <li data-i18n="why.good3">Un compte est lié à un seul appareil enregistré</li>
+          <li data-i18n="why.good4">Heures, retards et présence calculés automatiquement</li>
+          <li data-i18n="why.good5">Rien à maintenir : une application et un tableau de bord</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FEATURES ============================ -->
+<section class="section section-alt" id="features">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker" data-i18n="feat.kicker">Fonctionnalités</p>
+      <h2 data-i18n="feat.title">Tout ce qu'il faut pour gérer les présences de vos équipes</h2>
+      <p class="section-sub" data-i18n="feat.sub">Une application mobile pour l'employé, une console d'administration pour vous. Rien de plus à installer.</p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card feature">
+        <div class="ficon ficon-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg>
+        </div>
+        <h3 data-i18n="feat.1.t">Pointage mobile</h3>
+        <p data-i18n="feat.1.d">Entrée et sortie en un seul geste depuis le smartphone de l'employé. Horloge en direct, rappel du dernier pointage, confirmation immédiate.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ficon ficon-navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        </div>
+        <h3 data-i18n="feat.2.t">Géolocalisation et zones</h3>
+        <p data-i18n="feat.2.d">Chaque pointage est vérifié contre les sites autorisés de l'employé. Hors de la zone, il est refusé — et le motif est enregistré.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ficon ficon-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>
+        </div>
+        <h3 data-i18n="feat.3.t">Tableau de bord temps réel</h3>
+        <p data-i18n="feat.3.d">Présents du jour, heures travaillées, sorties manquantes, présence par site, retards cumulés par employé. Vous voyez l'activité pendant qu'elle se passe.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ficon ficon-navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg>
+        </div>
+        <h3 data-i18n="feat.4.t">Feuille de temps et retards</h3>
+        <p data-i18n="feat.4.d">Les heures se calculent seules. Retards et départs anticipés sont mesurés selon les horaires du site. Export CSV à transmettre au comptable.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ficon ficon-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11.2a3 3 0 1 0-2.2-5.4"/><path d="M18.4 20a5.6 5.6 0 0 0-2.2-4.4"/></svg>
+        </div>
+        <h3 data-i18n="feat.5.t">Employés, sites et appareils</h3>
+        <p data-i18n="feat.5.d">Créez vos sites de travail et leurs zones, affectez chaque employé à un ou plusieurs sites, gérez les appareils liés aux comptes.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ficon ficon-navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l7.5 3v5.6c0 4.6-3.1 8.4-7.5 9.8-4.4-1.4-7.5-5.2-7.5-9.8V5.8z"/><path d="M9 12.2l2.1 2.1 4-4.2"/></svg>
+        </div>
+        <h3 data-i18n="feat.6.t">Sécurité et anti-fraude</h3>
+        <p data-i18n="feat.6.d">Un compte est lié à un seul appareil enregistré, les fausses localisations sont détectées, et chaque tentative — acceptée ou refusée — laisse une trace dans le journal.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker" data-i18n="how.kicker">Comment ça marche</p>
+      <h2 data-i18n="how.title">Opérationnel en quatre étapes</h2>
+      <p class="section-sub" data-i18n="how.sub">Le paramétrage se fait une fois. Ensuite, tout se passe tout seul.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <span class="step-n">1</span>
+        <h3 data-i18n="how.1.t">Créez vos sites de travail</h3>
+        <p data-i18n="how.1.d">Adresse, rayon de la zone autorisée, et si vous le souhaitez les horaires d'entrée et de sortie qui serviront à calculer les retards.</p>
+      </li>
+      <li class="step">
+        <span class="step-n">2</span>
+        <h3 data-i18n="how.2.t">Ajoutez vos employés</h3>
+        <p data-i18n="how.2.d">Affectez chacun à un ou plusieurs sites, puis créez son accès. Vous lui remettez ses identifiants.</p>
+      </li>
+      <li class="step">
+        <span class="step-n">3</span>
+        <h3 data-i18n="how.3.t">Ils pointent depuis leur téléphone</h3>
+        <p data-i18n="how.3.d">Un bouton pour l'entrée, un pour la sortie. La position est vérifiée avant que le pointage soit accepté.</p>
+      </li>
+      <li class="step">
+        <span class="step-n">4</span>
+        <h3 data-i18n="how.4.t">Vous suivez et vous exportez</h3>
+        <p data-i18n="how.4.d">Le tableau de bord se remplit en direct. En fin de mois, la feuille de temps s'exporte en CSV pour la paie.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ DEMO ============================ -->
+<section class="section section-dark" id="demo">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker kicker-light" data-i18n="demo.kicker">Démonstration</p>
+      <h2 data-i18n="demo.title">Voyez l'application en action</h2>
+      <p class="section-sub" data-i18n="demo.sub">Le parcours complet en quelques minutes : création d'un site, pointage depuis le mobile, et suivi en temps réel côté administration.</p>
+    </div>
+
+    <figure class="video-wrap">
+      <div class="video-frame" id="videoFrame" data-src="assets/video/demo.mp4">
+        <img src="assets/img/pointage-app-mockup.png" alt="" class="video-poster" loading="lazy">
+        <button type="button" class="video-play" id="videoPlay" aria-label="Lire la vidéo de démonstration">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      <figcaption class="video-note" id="videoNote" hidden>
+        <span data-i18n="demo.soon">La vidéo de démonstration arrive très bientôt.</span>
+        <a href="#contact" data-i18n="demo.soonCta">Demandez une démonstration en direct →</a>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ USE CASES ============================ -->
+<section class="section section-alt" id="usecases">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker" data-i18n="uc.kicker">Cas d'usage</p>
+      <h2 data-i18n="uc.title">Pensé pour les équipes qui ne restent pas au bureau</h2>
+    </div>
+
+    <div class="grid grid-3 usecases">
+      <div class="uc"><h3 data-i18n="uc.1.t">BTP et chantiers</h3><p data-i18n="uc.1.d">Une zone par chantier, des équipes qui changent de site, et des heures justifiées pour chaque intervenant.</p></div>
+      <div class="uc"><h3 data-i18n="uc.2.t">Gardiennage et sécurité</h3><p data-i18n="uc.2.d">Prises de poste vérifiées sur place, y compris la nuit et le week-end, sans superviseur sur site.</p></div>
+      <div class="uc"><h3 data-i18n="uc.3.t">Nettoyage et propreté</h3><p data-i18n="uc.3.d">Des agents répartis sur des dizaines de sites clients, et la preuve de présence qui accompagne la facturation.</p></div>
+      <div class="uc"><h3 data-i18n="uc.4.t">Commerces multi-sites</h3><p data-i18n="uc.4.d">Chaque point de vente devient une zone. Les ouvertures et les fermetures se suivent depuis un seul écran.</p></div>
+      <div class="uc"><h3 data-i18n="uc.5.t">Restauration et hôtellerie</h3><p data-i18n="uc.5.d">Des équipes en coupure, des horaires décalés, et un calcul de retard qui suit les horaires de l'établissement.</p></div>
+      <div class="uc"><h3 data-i18n="uc.6.t">Techniciens et interventions</h3><p data-i18n="uc.6.d">Le pointage se fait chez le client, dans la zone prévue, sans passer par le dépôt le matin.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PASSERELLE ============================ -->
+<section class="crossband">
+  <div class="container crossband-inner">
+    <div class="crossband-copy">
+      <p class="kicker" data-i18n="cross.kicker">L'autre solution</p>
+      <h2 data-i18n="cross.title">Vous préférez une pointeuse à l'entrée ?</h2>
+      <p data-i18n="cross.sub">Nous fournissons aussi les bornes — empreinte, badge, code ou reconnaissance faciale — nos techniciens les installent chez vous, et elles alimentent le même logiciel de gestion.</p>
+    </div>
+    <a class="btn btn-primary btn-lg" href="/pointeuse" data-i18n="cross.cta">Découvrir nos pointeuses biométriques</a>
+  </div>
+</section>
+
+<!-- ============================ PRICING ============================ -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker" data-i18n="price.kicker">Tarifs</p>
+      <h2 data-i18n="price.title">Un tarif adapté à votre effectif</h2>
+      <p class="section-sub" data-i18n="price.sub">Le prix dépend du nombre d'employés et de sites. Dites-nous où vous en êtes, nous vous répondons avec un devis clair.</p>
+    </div>
+
+    <div class="grid grid-3 plans">
+      <article class="card plan">
+        <h3 data-i18n="price.1.t">Essentiel</h3>
+        <p class="plan-for" data-i18n="price.1.for">TPE, un seul site</p>
+        <p class="plan-price" data-i18n="price.quote">Sur devis</p>
+        <ul>
+          <li data-i18n="price.1.f1">1 site de travail et sa zone</li>
+          <li data-i18n="price.1.f2">Pointage mobile illimité</li>
+          <li data-i18n="price.1.f3">Tableau de bord et feuille de temps</li>
+          <li data-i18n="price.1.f4">Export CSV</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="#contact" data-i18n="cta.quote">Demander un devis</a>
+      </article>
+
+      <article class="card plan plan-featured">
+        <span class="plan-badge" data-i18n="price.popular">Le plus demandé</span>
+        <h3 data-i18n="price.2.t">Pro</h3>
+        <p class="plan-for" data-i18n="price.2.for">PME multi-sites</p>
+        <p class="plan-price" data-i18n="price.quote">Sur devis</p>
+        <ul>
+          <li data-i18n="price.2.f1">Sites et zones illimités</li>
+          <li data-i18n="price.2.f2">Horaires par site, retards et départs anticipés</li>
+          <li data-i18n="price.2.f3">Gestion des appareils liés</li>
+          <li data-i18n="price.2.f4">Journal complet des pointages</li>
+          <li data-i18n="price.2.f5">Accompagnement au démarrage</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#contact" data-i18n="cta.quote">Demander un devis</a>
+      </article>
+
+      <article class="card plan">
+        <h3 data-i18n="price.3.t">Entreprise</h3>
+        <p class="plan-for" data-i18n="price.3.for">Grands effectifs, besoins spécifiques</p>
+        <p class="plan-price" data-i18n="price.quote">Sur devis</p>
+        <ul>
+          <li data-i18n="price.3.f1">Tout le plan Pro</li>
+          <li data-i18n="price.3.f2">Déploiement dédié et isolé</li>
+          <li data-i18n="price.3.f3">Hébergement convenu avec vous</li>
+          <li data-i18n="price.3.f4">Adaptations et intégrations</li>
+          <li data-i18n="price.3.f5">Support prioritaire</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="#contact" data-i18n="cta.quote">Demander un devis</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section section-alt" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head">
+      <p class="kicker" data-i18n="faq.kicker">FAQ</p>
+      <h2 data-i18n="faq.title">Les questions qu'on nous pose</h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary data-i18n="faq.1.q">Faut-il acheter du matériel ?</summary>
+        <p data-i18n="faq.1.a">Pas pour cette solution : vos employés utilisent leur propre téléphone, et vous un navigateur. Si vous préférez une borne à l'entrée, nous fournissons et installons aussi des pointeuses — voir la solution « Pointeuse + système ».</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.2.q">Que se passe-t-il si un employé pointe en dehors du site ?</summary>
+        <p data-i18n="faq.2.a">Le pointage est refusé et l'employé voit immédiatement pourquoi. La tentative reste visible dans le journal, avec son motif : hors zone, localisation simulée, ou appareil non reconnu.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.3.q">Un employé peut-il pointer depuis le téléphone d'un collègue ?</summary>
+        <p data-i18n="faq.3.a">Non. Chaque compte est lié à l'appareil sur lequel il a été enregistré. Un pointage venant d'un autre téléphone est rejeté, et changer d'appareil passe par l'administrateur.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.4.q">Peut-on gérer plusieurs sites et plusieurs équipes ?</summary>
+        <p data-i18n="faq.4.a">Oui. Vous créez autant de sites que nécessaire, chacun avec sa zone et ses horaires, et vous affectez chaque employé aux sites où il est autorisé à pointer.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.5.q">Comment récupérer les heures pour la paie ?</summary>
+        <p data-i18n="faq.5.a">La feuille de temps se met à jour en continu et s'exporte en CSV sur la période de votre choix. Le fichier s'ouvre dans Excel et se transmet tel quel au comptable.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.6.q">Où sont hébergées nos données ?</summary>
+        <p data-i18n="faq.6.a">Chaque entreprise dispose de son propre déploiement, avec sa propre base de données — vos données ne sont mélangées avec celles d'aucun autre client. L'hébergement est convenu avec vous lors de la mise en place.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.7.q">Combien de temps pour démarrer ?</summary>
+        <p data-i18n="faq.7.a">Comptez une journée. Nous mettons en place votre espace, créons vos premiers sites avec vous, et vos équipes peuvent pointer dès le lendemain matin.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.8.q">L'application fonctionne-t-elle sur iPhone et sur Android ?</summary>
+        <p data-i18n="faq.8.a">Oui, l'application mobile est disponible pour les deux. La console d'administration s'utilise depuis n'importe quel navigateur, sur ordinateur comme sur tablette.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-copy">
+        <p class="kicker kicker-light" data-i18n="contact.kicker">Parlons-en</p>
+        <h2 data-i18n="contact.title">Voyez Pointage sur vos propres sites</h2>
+        <p class="section-sub" data-i18n="contact.sub">Décrivez-nous votre organisation — nombre d'employés, nombre de sites — et nous vous montrons la solution configurée pour votre cas, puis nous vous envoyons un devis.</p>
+
+        <div class="contact-direct">
+          <a class="contact-chip" data-cfg="whatsapp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.3.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2z"/></svg>
+            <span data-i18n="contact.wa">WhatsApp</span>
+          </a>
+          <a class="contact-chip" data-cfg="phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v2.6a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6A19.6 19.6 0 0 1 2.3 4 2 2 0 0 1 4.3 2h2.6a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.7a2 2 0 0 1-.4 2.1L8 9.5a15.9 15.9 0 0 0 6 6l1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+            <span class="phone-text">+212 6 34 59 33 28</span>
+          </a>
+          <a class="contact-chip" href="mailto:contact@marchepro.ma">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg>
+            <span>contact@marchepro.ma</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <form id="demoForm" class="form" novalidate>
+          <input type="hidden" name="solution" value="Pointage mobile">
+          <div class="field">
+            <label for="f-name" data-i18n="form.name">Nom et prénom</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-company" data-i18n="form.company">Entreprise</label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone" data-i18n="form.phone">Téléphone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+            </div>
+            <div class="field">
+              <label for="f-email" data-i18n="form.email">E-mail</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-size" data-i18n="form.size">Nombre d'employés</label>
+              <select id="f-size" name="employees">
+                <option value="1-10">1 – 10</option>
+                <option value="11-50">11 – 50</option>
+                <option value="51-200">51 – 200</option>
+                <option value="200+">200+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-sites" data-i18n="form.sites">Nombre de sites</label>
+              <select id="f-sites" name="sites">
+                <option value="1">1</option>
+                <option value="2-5">2 – 5</option>
+                <option value="6-20">6 – 20</option>
+                <option value="20+">20+</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg" data-i18n="form.msg">Votre besoin (facultatif)</label>
+            <textarea id="f-msg" name="message" rows="3"></textarea>
+          </div>
+
+          <!-- Anti-spam : champ invisible, rempli uniquement par les robots -->
+          <div class="hp-field" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+
+          <button class="btn btn-primary btn-block btn-lg" type="submit" data-i18n="form.submit">Envoyer ma demande</button>
+          <p class="form-legal" data-i18n="form.legal">Vos coordonnées servent uniquement à vous recontacter au sujet de Pointage.</p>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="brand brand-dark" href="#top" aria-label="Pointage">
+        <img src="assets/img/logo-mark.svg" alt="" width="30" height="30">
+        <span class="brand-word"><span class="brand-point">Point</span><span class="brand-age">age</span></span>
+      </a>
+      <p data-i18n="footer.tag">Deux façons de pointer, un seul tableau de bord : depuis le téléphone de vos équipes, ou sur une pointeuse installée chez vous.</p>
+    </div>
+
+    <nav class="footer-col" aria-label="Solutions">
+      <h4 data-i18n="footer.solutions">Solutions</h4>
+      <a href="/mobile" data-i18n="nav.solMobile">Pointage mobile</a>
+      <a href="/pointeuse" data-i18n="nav.solDevice">Pointeuse + système</a>
+      <a href="#demo" data-i18n="nav.demo">Démo</a>
+      <a href="https://solutions.marchepro.ma/" target="_blank" rel="noopener" data-i18n="nav.other">Autres solutions</a>
+    </nav>
+
+    <nav class="footer-col" aria-label="Produit">
+      <h4 data-i18n="footer.product">Produit</h4>
+      <a href="#features" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#how" data-i18n="nav.how">Comment ça marche</a>
+      <a href="#usecases" data-i18n="nav.usecases">Cas d'usage</a>
+      <a href="#pricing" data-i18n="nav.pricing">Tarifs</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    </nav>
+
+    <div class="footer-col">
+      <h4 data-i18n="footer.contact">Contact</h4>
+      <a href="mailto:contact@marchepro.ma">contact@marchepro.ma</a>
+      <a data-cfg="phone" class="phone-text">+212 6 34 59 33 28</a>
+      <a data-cfg="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="social-link" href="https://www.facebook.com/profile.php?id=61593704427657" target="_blank" rel="noopener me">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.91.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+        <span>Facebook</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© <span id="year">2026</span> Pointage — <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+    <p class="footer-domain">pointage.marchepro.ma</p>
+  </div>
+</footer>
+
+<a class="wa-float" data-cfg="whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2 1.3.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2z"/></svg>
+</a>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

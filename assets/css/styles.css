@@ -127,8 +127,8 @@ p { margin: 0; }
 .nav a:hover { color: var(--navy-900); background: var(--muted); }
 
 /* Bascule entre les deux offres : pointage depuis le téléphone, ou pointeuse
-   posée sur site. C'est le premier choix du visiteur, il passe donc avant les
-   ancres de section — et il est stylé comme un sélecteur, pas comme un lien. */
+   posée sur site. C'est la seule navigation de l'en-tête — chaque page se
+   parcourt en déroulant. Stylée comme un sélecteur, pas comme un lien. */
 .nav-switch {
   display: inline-flex; flex-shrink: 0; gap: 2px;
   background: var(--muted); border-radius: 999px; padding: 3px;
@@ -144,8 +144,6 @@ p { margin: 0; }
 .nav-switch svg { width: 16px; height: 16px; flex-shrink: 0; }
 .nav .nav-switch a.is-current svg { color: var(--teal-600); }
 
-.nav-divider { width: 1px; height: 22px; background: var(--border); margin-inline: 6px; flex-shrink: 0; }
-
 .header-actions { display: flex; align-items: center; gap: 12px; margin-inline-start: auto; }
 
 .lang-switch { display: inline-flex; background: var(--muted); border-radius: 999px; padding: 3px; }
@@ -156,6 +154,16 @@ p { margin: 0; }
   transition: background-color .18s, color .18s;
 }
 .lang-switch button.is-active { background: #fff; color: var(--navy-900); box-shadow: var(--shadow-sm); }
+
+/* Renvoi vers le catalogue MarchePro. Lien sortant, donc traité comme un
+   lien de nav ordinaire et non comme une des deux offres du site. */
+.nav .nav-other { display: inline-flex; align-items: center; gap: 7px; margin-inline-start: 8px; }
+.nav-other svg { width: 14px; height: 14px; opacity: .65; flex-shrink: 0; }
+.nav .nav-other:hover svg { opacity: 1; }
+
+/* Rappel du bouton d'action, réservé au menu déroulant : en grand écran
+   c'est celui de l'en-tête qui sert. */
+.nav-cta { display: none; }
 
 .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 0 10px; background: var(--muted); border: 0; border-radius: 12px; cursor: pointer; }
 .nav-toggle span { display: block; height: 2px; background: var(--navy-900); border-radius: 2px; transition: transform .25s, opacity .2s; }
@@ -434,6 +442,12 @@ html[dir="rtl"] .faq summary { padding: 20px 24px 20px 56px; }
 .footer-col h4 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 16px; }
 .footer-col a { display: block; font-size: 15px; margin-bottom: 11px; transition: color .18s; }
 .footer-col a:hover { color: var(--teal-500); }
+/* Lien social du pied de page : même graisse que les autres liens de la
+   colonne contact, avec le logo en tête. */
+.social-link { display: inline-flex; align-items: center; gap: 8px; }
+.social-link svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .8; }
+.social-link:hover svg { opacity: 1; }
+
 .footer-bottom {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
   border-top: 1px solid rgba(255, 255, 255, .12); padding-block: 22px; font-size: 14px;
@@ -561,7 +575,6 @@ html[dir="rtl"] .brand { direction: ltr; }
 @media (max-width: 1180px) {
   .nav a { padding: 8px 9px; font-size: 15px; }
   .nav .nav-switch a { padding: 7px 11px; font-size: 14px; }
-  .nav-divider { margin-inline: 4px; }
   .header-inner { gap: 16px; }
   .hide-sm { display: none; }
   /* Cinq étapes sur une ligne ne tiennent plus : on repasse sur trois colonnes
@@ -596,12 +609,18 @@ html[dir="rtl"] .brand { direction: ltr; }
   .nav.is-open { transform: none; opacity: 1; pointer-events: auto; }
   .nav a { padding: 13px 8px; font-size: 17px; border-radius: var(--radius-sm); }
   .nav-toggle { display: flex; }
+  .nav .nav-other { margin-inline-start: 0; }
+  .nav a.nav-cta {
+    display: inline-flex; width: 100%; margin-top: 6px;
+    padding: 13px 22px; border-radius: 999px;
+    color: #fff; background: var(--teal-500);
+  }
+  .nav a.nav-cta:hover { color: #fff; background: var(--teal-600); }
   .hide-sm { display: none; }
   /* Dans le menu déroulant, la bascule redevient deux boutons pleine largeur,
-     posés au-dessus des ancres de section. */
+     posés au-dessus du bouton d'action. */
   .nav-switch { display: grid; grid-template-columns: 1fr 1fr; width: 100%; margin-bottom: 10px; }
   .nav .nav-switch a { justify-content: center; padding: 11px 8px; font-size: 15px; }
-  .nav-divider { display: none; }
   .grid-3, .compare { grid-template-columns: 1fr; }
   .statbar-inner { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
   .section { padding: 68px 0; }

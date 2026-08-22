@@ -10,6 +10,25 @@
   var html = document.documentElement;
 
   /* ------------------------------------------------------------------
+     0. Aperçu depuis le disque
+     Les pages se lient entre elles par /mobile et /pointeuse : ce sont les
+     adresses servies en ligne, et c'est ce qui doit figurer dans le HTML
+     pour que les moteurs suivent des liens directs, sans redirection.
+     En file:// une barre initiale désigne la racine du disque : on repasse
+     alors sur les noms de fichiers, le temps de la relecture locale.
+     ------------------------------------------------------------------ */
+  if (location.protocol === "file:") {
+    var LOCAL = { "/mobile": "mobile.html", "/pointeuse": "pointeuse.html" };
+    [].forEach.call(document.querySelectorAll('a[href^="/"]'), function (a) {
+      var href = a.getAttribute("href");
+      var cut = href.indexOf("#");
+      var hash = cut > -1 ? href.slice(cut) : "";
+      var page = cut > -1 ? href.slice(0, cut) : href;
+      if (LOCAL[page]) a.setAttribute("href", LOCAL[page] + hash);
+    });
+  }
+
+  /* ------------------------------------------------------------------
      1. Traduction
      Le français vit dans le HTML : on le mémorise au chargement pour
      pouvoir y revenir sans avoir à le dupliquer dans le dictionnaire.
@@ -39,7 +58,7 @@
 
     /* Chaque page a son propre titre et sa propre description : la clé est
        portée par <html data-page="…">. */
-    var page = html.getAttribute("data-page") || "home";
+    var page = html.getAttribute("data-page") || "mobile";
     var pageMeta = (DICT.meta && DICT.meta[page]) || null;
     var meta = (pageMeta && pageMeta[lang]) || null;
     if (meta) {

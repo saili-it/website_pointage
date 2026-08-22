@@ -5,8 +5,10 @@ Pas de build, pas de dépendances : ce sont des fichiers servis tels quels.
 
 ```
 website/
-  index.html            solution 1 — pointage mobile géolocalisé
-  pointeuses.html       solution 2 — pointeuse + installation + système
+  index.html            renvoi vers /mobile (la racine n’est pas une page)
+  mobile.html           servie sur /mobile — pointage mobile géolocalisé
+  pointeuse.html        servie sur /pointeuse — pointeuse + installation + système
+  .htaccess             mêmes URLs propres sur un hébergement Apache
   robots.txt
   sitemap.xml
   Dockerfile            image nginx, écoute sur 9090
@@ -24,14 +26,21 @@ website/
 
 ## 0. Les deux offres
 
-Le site présente deux solutions, chacune sur sa propre page. La bascule est
-dans l'en-tête, avant les ancres de section, et elle est reprise en pied de
-page ainsi que dans une bande de renvoi au milieu de chaque page.
+Le site présente deux solutions, chacune sur sa propre page, à une adresse
+courte : **`/mobile`** et **`/pointeuse`**. L’en-tête ne contient plus que la
+bascule entre les deux — aucune ancre de section, chaque page se parcourt en
+déroulant. La bascule est reprise en pied de page et dans une bande de renvoi
+au milieu de chaque page ; le détail des sections reste dans le pied de page.
 
-| Page | Offre | Promesse |
-| --- | --- | --- |
-| `index.html` | **Pointage mobile** | Les employés pointent depuis leur téléphone, dans les zones autorisées. Aucun matériel. |
-| `pointeuses.html` | **Pointeuse + système** | Nous fournissons la borne, nos techniciens l'installent, et elle alimente le même logiciel. |
+| Page | Adresse | Offre | Promesse |
+| --- | --- | --- | --- |
+| `mobile.html` | `/mobile` | **Pointage mobile** | Les employés pointent depuis leur téléphone, dans les zones autorisées. Aucun matériel. |
+| `pointeuse.html` | `/pointeuse` | **Pointeuse + système** | Nous fournissons la borne, nos techniciens l'installent, et elle alimente le même logiciel. |
+
+L’en-tête et le pied de page portent en plus un lien sortant **Autres
+solutions** vers `https://solutions.marchepro.ma/`, le catalogue MarchePro.
+C’est le seul lien du site à quitter le domaine ; il s’ouvre dans un nouvel
+onglet et son libellé vit sous la clé `nav.other`.
 
 Les deux formulaires sont identiques, à un champ caché près : `solution` vaut
 `Pointage mobile` ou `Pointeuse + système`, ce qui permet de savoir depuis
@@ -145,8 +154,8 @@ Pour modifier un texte français, éditer la page concernée ; pour l'arabe,
 
 Le titre et la description de chaque page sont traduits eux aussi. Ils sont
 regroupés dans `i18n.js` sous `meta`, indexés par la valeur de l'attribut
-`data-page` porté par la balise `<html>` (`home` pour `index.html`, `devices`
-pour `pointeuses.html`). Une nouvelle page a donc besoin de son propre
+`data-page` porté par la balise `<html>` (`mobile` pour `mobile.html`,
+`pointeuse` pour `pointeuse.html`). Une nouvelle page a donc besoin de son propre
 `data-page` et de l'entrée `meta` correspondante.
 
 > Une même clé `data-i18n` doit porter **le même texte français** partout où
@@ -184,8 +193,8 @@ Ce que la configuration fait pour vous ([nginx.conf](nginx.conf)) :
 Le conteneur tourne en **lecture seule** (`read_only: true`), avec les seuls
 répertoires temporaires de nginx montés en tmpfs, et `no-new-privileges`.
 
-Seuls `index.html`, `pointeuses.html`, `assets/`, `robots.txt` et `sitemap.xml`
-entrent dans l'image. Les fichiers sources restés à la racine (`demo vd.mp4`,
+Seuls `index.html`, `mobile.html`, `pointeuse.html`, `assets/`, `robots.txt` et
+`sitemap.xml` entrent dans l'image. Les fichiers sources restés à la racine (`demo vd.mp4`,
 les PNG d'origine) sont exclus par [.dockerignore](.dockerignore) — sans quoi
 92 Mo partiraient inutilement vers le démon à chaque build.
 
@@ -240,18 +249,27 @@ docker compose up -d --build
 Téléverser le contenu du dossier `website/` à la racine du sous-domaine.
 
 **Apache / cPanel** — copier les fichiers dans le `public_html` du sous-domaine
-`pointage.marchepro.ma`. Rien d'autre : il n'y a ni routage, ni `.htaccess`
-nécessaire.
+`pointage.marchepro.ma`, **`.htaccess` compris** : c’est lui qui sert `/mobile`
+et `/pointeuse` sans extension et qui renvoie la racine sur `/mobile`.
 
 **Nginx** :
 ```nginx
 server {
     server_name pointage.marchepro.ma;
     root /var/www/pointage-site;
-    index index.html;
-    location / { try_files $uri $uri/ =404; }
+
+    location = /           { return 301 /mobile; }
+    location = /index.html { return 301 /mobile; }
+    location ~ "^/(.+)\.html$" { return 301 /$1; }
+
+    # L’extension implicite : /mobile sert mobile.html.
+    location / { try_files $uri $uri.html $uri/ =404; }
 }
 ```
+
+La configuration complète — redirections, cache, en-têtes — est celle du
+conteneur, dans [nginx.conf](nginx.conf) ; `.htaccess` en est l’équivalent
+Apache. **Les deux doivent rester cohérents.**
 
 Activer HTTPS (Let's Encrypt) : le site est référencé en `https://` dans les
 balises canoniques, le sitemap et `robots.txt`.
@@ -263,10 +281,89 @@ cd website
 python -m http.server 8080     # puis http://localhost:8080
 ```
 
-Ouvrir directement `index.html` depuis le disque fonctionne aussi, à ceci près
-que la vidéo et les polices distantes peuvent être bloquées par le navigateur.
+Ouvrir directement `index.html` depuis le disque fonctionne aussi : les pages
+se lient entre elles en relatif (`mobile.html`, `pointeuse.html`) précisément
+pour ça — un lien en `/mobile` pointerait sur la racine du disque. Seules la
+vidéo et les polices distantes peuvent être bloquées par le navigateur.
 
-## 7. Ce qui reste à faire côté contenu
+Les adresses courtes `/mobile` et `/pointeuse` ne s’obtiennent qu’avec nginx ou
+Apache (voir §4 et §5) ; `python -m http.server` ne connaît pas l’extension
+implicite et sert donc `mobile.html`. C’est sans conséquence : sur le serveur,
+`mobile.html` est redirigé en 301 vers `/mobile`.
+
+## 7. Référencement (SEO)
+
+### Mots-clés visés
+
+Une page = une intention. Ne pas viser les mêmes requêtes sur les deux pages,
+elles se feraient concurrence dans les résultats.
+
+| | `/mobile` | `/pointeuse` |
+| --- | --- | --- |
+| **Principal** | logiciel de pointage des employés | pointeuse biométrique Maroc |
+| | application de pointage GPS | pointeuse empreinte digitale |
+| **Secondaires** | pointage à distance, pointage mobile, gestion des présences, suivi des heures de travail, pointage chantier, feuille de temps, export paie | badgeuse, pointeuse reconnaissance faciale, pointeuse badge RFID, contrôle d'accès, installation pointeuse, pointeuse multi-sites |
+| **Arabe** | برنامج تسجيل حضور الموظفين | آلة بصمة |
+
+Ces mots sont placés là où ils comptent : `<title>`, `<meta description>`,
+le `<h1>`, les `<h2>` et le premier paragraphe. Il n'y a **pas** de balise
+`<meta name="keywords">` : Google l'ignore depuis 2009, elle n'apporte rien.
+
+Le titre et la description de chaque page sont écrits à deux endroits — en dur
+dans le `<head>` et dans le bloc `meta` de [i18n.js](assets/js/i18n.js), qui
+les retraduit au changement de langue. **Les deux doivent rester identiques
+en français**, sinon le titre change tout seul au chargement de la page.
+
+### Balisage structuré
+
+Chaque page porte un seul bloc JSON-LD, un `@graph` qui décrit :
+
+| Nœud | Rôle |
+| --- | --- |
+| `Organization` | L'entreprise, avec le téléphone, l'e-mail et le lien Facebook (`sameAs`). Le même `@id` sur les deux pages : c'est ce qui dit aux moteurs qu'il s'agit d'une seule entité. |
+| `WebSite` / `WebPage` | Le site et la page courante, rattachés à l'organisation. |
+| `SoftwareApplication` | Page mobile : l'application, avec sa liste de fonctionnalités. |
+| `Product` + `Service` | Page pointeuse : le matériel et la prestation d'installation. |
+| `FAQPage` | Les questions de la section FAQ, recopiées mot pour mot. |
+
+> Les questions du JSON-LD doivent rester **identiques** au texte visible de la
+> section `#faq`. Si vous modifiez une réponse dans la page, modifiez-la aussi
+> dans le `<head>`, sinon le balisage devient faux.
+
+À savoir : depuis août 2023, Google ne montre plus les FAQ en résultat enrichi
+pour les sites d'entreprise. Le balisage reste utile pour la compréhension du
+site et pour Bing, mais il ne fera pas apparaître d'accordéon dans Google.
+
+Les prix ne sont pas déclarés : tout est sur devis, et annoncer `0 MAD`
+ferait afficher « gratuit ». Le jour où des tarifs publics existent, les
+ajouter dans `offers` rendra la fiche éligible aux résultats enrichis.
+
+### Adresses et exploration
+
+- Une seule adresse canonique par page, `/mobile` et `/pointeuse`, reprise à
+  l'identique dans `canonical`, `og:url`, le sitemap et les liens internes.
+- `hreflang` `fr` / `ar` / `x-default`. L'arabe n'ayant pas d'URL propre
+  (il est rendu côté client), c'est une déclaration de principe : pour un vrai
+  référencement en arabe, il faudrait des pages servies séparément.
+- [sitemap.xml](sitemap.xml) liste les deux pages avec leur `lastmod` — à
+  remettre à jour quand le contenu change vraiment.
+- [robots.txt](robots.txt) n'interdit rien : bloquer les redirections
+  empêcherait les moteurs de les suivre.
+
+### À faire une fois en ligne
+
+1. **Google Search Console** — ajouter le domaine, vérifier la propriété, y
+   soumettre `https://pointage.marchepro.ma/sitemap.xml`. C'est là que se
+   lisent les requêtes réelles, qui doivent ensuite guider les mots-clés.
+2. **Bing Webmaster Tools** — même chose, l'import depuis Search Console suffit.
+3. **Fiche d'établissement Google** — le levier le plus fort pour « pointeuse
+   Casablanca » et assimilés. Demande une adresse et une ville réelles.
+4. **Facebook** — donner un nom d'utilisateur à la page (`facebook.com/…` au
+   lieu de `profile.php?id=…`), puis remplacer le lien dans le pied de page et
+   dans `sameAs`. Y publier les liens vers les deux pages.
+5. Faire pointer les autres sites MarchePro vers celui-ci, et l'inverse.
+
+## 8. Ce qui reste à faire côté contenu
 
 - [x] Coordonnées renseignées dans `config.js`
 - [x] Vidéo en place et compressée (92 Mo → 3 Mo)
