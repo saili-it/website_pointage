@@ -453,6 +453,12 @@ html[dir="rtl"] .faq summary { padding: 20px 24px 20px 56px; }
   border-top: 1px solid rgba(255, 255, 255, .12); padding-block: 22px; font-size: 14px;
 }
 .footer-domain { color: var(--teal-500); font-weight: 600; }
+/* Lien légal du bandeau bas. Souligné — contrairement aux liens des
+   colonnes ci-dessus, il est isolé au milieu d'une ligne de texte et rien
+   d'autre ne le signalerait comme cliquable. */
+.footer-legal { text-decoration: underline; text-underline-offset: 3px; transition: color .18s; }
+.footer-legal:hover { color: var(--teal-500); }
+.footer-sep { opacity: .45; padding-inline: 4px; }
 
 /* ============================ WHATSAPP FLOTTANT ============================ */
 .wa-float {

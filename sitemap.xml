@@ -22,4 +22,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Uniquement en français, et sans hreflang : c'est l'URL déclarée à Google
+       Play comme règles de confidentialité de l'application, et elle doit
+       rester stable et résolvable telle quelle. -->
+  <url>
+    <loc>https://pointage.marchepro.ma/confidentialite</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>

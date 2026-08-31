@@ -202,6 +202,7 @@ window.POINTAGE_I18N = {
     "footer.product": "المنتج",
     "footer.contact": "اتصل بنا",
     "footer.rights": "جميع الحقوق محفوظة.",
+    "footer.privacy": "سياسة الخصوصية",
 
     /* --- Passerelle affichée sur la page « pointage mobile » --- */
     "cross.kicker": "الحل الآخر",
