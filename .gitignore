@@ -1,0 +1,6 @@
+
+# Les rushes video ne vont pas dans git : la source de la demo pesait 91,6 Mo
+# et a ete purgee de l historique. Seule la version compressee que le site
+# sert reellement est versionnee, d ou la ligne de reautorisation.
+*.mp4
+!assets/video/demo.mp4
